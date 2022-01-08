@@ -20,6 +20,7 @@
  */
 
 #include "opentx.h"
+#include "VirtualFS.h"
 #include "io/frsky_firmware_update.h"
 #include "hal/adc_driver.h"
 #include "timers_driver.h"
@@ -1272,6 +1273,7 @@ void opentxClose(uint8_t shutdown)
 #if defined(SDCARD)
   sdDone();
 #endif
+  VirtualFS::instance().stop();
 }
 
 void opentxResume()
@@ -1284,6 +1286,7 @@ void opentxResume()
   luaInitThemesAndWidgets();
 #endif
 
+  VirtualFS::instance().restart();
   storageReadAll();
 
 #if defined(COLORLCD)
