@@ -150,6 +150,7 @@ void menuTextView(event_t event)
       break;
     
     case EVT_KEY_BREAK(KEY_ENTER):
+      if (g_model.checklistInteractiveBW){
         if (checklistPosition < reusableBuffer.viewText.linesCount) {
           ++checklistPosition;
           if (checklistPosition-(int)menuVerticalOffset == LCD_LINES-1 && menuVerticalOffset+LCD_LINES-1 < reusableBuffer.viewText.linesCount) {
@@ -157,6 +158,7 @@ void menuTextView(event_t event)
             sdReadTextFile(reusableBuffer.viewText.filename, reusableBuffer.viewText.lines, reusableBuffer.viewText.linesCount);
           }
         } 
+      }
       break;
 
     case EVT_KEY_NEXT_LINE:
@@ -173,9 +175,14 @@ void menuTextView(event_t event)
   }
 
   for (int i=0; i<LCD_LINES-1; i++) {
-    if(i < reusableBuffer.viewText.linesCount)
-      drawCheckBox(0, i*FH+FH+1, i < checklistPosition-(int)menuVerticalOffset, i == checklistPosition-(int)menuVerticalOffset);
-    lcdDrawText(8, i*FH+FH+1, reusableBuffer.viewText.lines[i], FIXEDWIDTH);
+    if (g_model.checklistInteractiveBW){
+      if (i < reusableBuffer.viewText.linesCount)
+        drawCheckBox(0, i*FH+FH+1, i < checklistPosition-(int)menuVerticalOffset, i == checklistPosition-(int)menuVerticalOffset);
+      lcdDrawText(8, i*FH+FH+1, reusableBuffer.viewText.lines[i], FIXEDWIDTH);
+    }
+    else {
+      lcdDrawText(0, i*FH+FH+1, reusableBuffer.viewText.lines[i], FIXEDWIDTH);
+    }
   }
 
   char * title = reusableBuffer.viewText.filename;
