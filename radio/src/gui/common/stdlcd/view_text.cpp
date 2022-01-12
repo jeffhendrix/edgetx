@@ -153,7 +153,7 @@ void menuTextView(event_t event)
       break;
     
     case EVT_KEY_BREAK(KEY_ENTER):
-      if (g_model.checklistInteractiveBW){
+      if (g_model.checklistInteractive && !reusableBuffer.viewText.pushMenu){
         if (checklistPosition < reusableBuffer.viewText.linesCount) {
           ++checklistPosition;
           if (checklistPosition-(int)menuVerticalOffset == LCD_LINES-1 && menuVerticalOffset+LCD_LINES-1 < reusableBuffer.viewText.linesCount) {
@@ -177,7 +177,7 @@ void menuTextView(event_t event)
       break;
 
     case EVT_KEY_BREAK(KEY_EXIT):
-      if (!g_model.checklistInteractiveBW || reusableBuffer.viewText.pushMenu == true) {
+      if (!g_model.checklistInteractive || reusableBuffer.viewText.pushMenu) {
         if (reusableBuffer.viewText.pushMenu == true) popMenu();
         reusableBuffer.viewText.checklistComplete = true;
       }
@@ -185,8 +185,8 @@ void menuTextView(event_t event)
   }
 
   for (int i=0; i<LCD_LINES-1; i++) {
-    if (g_model.checklistInteractiveBW){
-      if (i < reusableBuffer.viewText.linesCount)
+    if (g_model.checklistInteractive){
+      if (i < reusableBuffer.viewText.linesCount && !reusableBuffer.viewText.pushMenu)
         drawCheckBox(0, i*FH+FH+1, i < checklistPosition-(int)menuVerticalOffset, i == checklistPosition-(int)menuVerticalOffset);
       lcdDrawText(8, i*FH+FH+1, reusableBuffer.viewText.lines[i], FIXEDWIDTH);
     }
