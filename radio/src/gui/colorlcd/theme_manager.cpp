@@ -438,7 +438,6 @@ bool ThemePersistance::createNewTheme(std::string name, ThemeFile &theme)
   char *s = strAppend(fullPath, THEMES_PATH, FF_MAX_LFN);
   s = strAppend(s, "/", FF_MAX_LFN - (s - fullPath));
   s = strAppend(s, name.c_str(), FF_MAX_LFN - (s - fullPath));
-#warning mkdir
   VfsError result = VirtualFS::instance().makeDirectory(fullPath);
   if (result != VfsError::OK) return false;
   s = strAppend(s, "/", FF_MAX_LFN - (s - fullPath));
