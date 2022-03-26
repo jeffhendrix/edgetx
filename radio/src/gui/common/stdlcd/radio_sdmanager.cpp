@@ -87,7 +87,7 @@ void onSdFormatConfirm(const char * result)
     logsClose();
     audioQueue.stopSD();
     if (sdCardFormat()) {
-      f_chdir(ROOT_PATH);
+      VirtualFS::instance().changeDirectory(ROOT_PATH);
       REFRESH_FILES();
     }
   }
@@ -323,7 +323,7 @@ void menuRadioSdManager(event_t _event)
 
   switch (_event) {
     case EVT_ENTRY:
-      f_chdir(ROOT_PATH);
+      VirtualFS::instance().changeDirectory(ROOT_PATH);
 #if LCD_DEPTH > 1
       lastPos = -1;
 #endif
@@ -359,7 +359,7 @@ void menuRadioSdManager(event_t _event)
       else {
         int index = menuVerticalPosition - HEADER_LINE - menuVerticalOffset;
         if (IS_DIRECTORY(reusableBuffer.sdManager.lines[index])) {
-          f_chdir(reusableBuffer.sdManager.lines[index]);
+          VirtualFS::instance().changeDirectory(reusableBuffer.sdManager.lines[index]);
           menuVerticalOffset = 0;
           menuVerticalPosition = HEADER_LINE;
           REFRESH_FILES();
@@ -605,7 +605,7 @@ void menuRadioSdManager(event_t _event)
             else {
               reusableBuffer.sdManager.lines[i][efflen] = 0;
             }
-            f_rename(reusableBuffer.sdManager.originalName, reusableBuffer.sdManager.lines[i]);
+            VirtualFS::instance().rename(reusableBuffer.sdManager.originalName, reusableBuffer.sdManager.lines[i]);
             REFRESH_FILES();
           }
         }
