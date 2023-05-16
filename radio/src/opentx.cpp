@@ -102,6 +102,8 @@ void checkValidMCU(void)
   #define TARGET_IDCODE   0x413
 #elif defined(STM32F429xx)
   #define TARGET_IDCODE   0x419
+#elif defined(STM32F413xx)
+  #define TARGET_IDCODE   0x463
 #else
   // Ensure new radio get registered :)
   #define TARGET_IDCODE   0x0
