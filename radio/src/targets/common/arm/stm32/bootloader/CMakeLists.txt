@@ -39,7 +39,7 @@ set(BOOTLOADER_SRC
   ../stm32_usart_driver.cpp
   init.c
   boot.cpp
-  bin_files.cpp
+  bin_files_vfs.cpp
   )
 
 if(SPI_FLASH)
